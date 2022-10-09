@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { CommentsComponent } from './components/comments/comments.component';
 import { CommentComponent } from './components/comment/comment.component';
 import { CommentFormComponent } from './components/comment-form/comment-form.component';
+import {RouterModule} from "@angular/router";
 
 
 
@@ -13,7 +14,8 @@ import { CommentFormComponent } from './components/comment-form/comment-form.com
     CommentFormComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    RouterModule
   ]
 })
 export class CommentsModule { }
