@@ -1,1 +1,32 @@
-<p>comment-form works!</p>
+<section class="comment-form">
+  <button class="comment-form__btn"
+          mat-raised-button
+          color="primary"
+          type="submit"
+          (click)="disabledFlag = !disabledFlag"
+          [disabled]="disabledFlag"
+  >Создать комментарий
+  </button>
+  <form
+    class="comment-form__form forma"
+    [formGroup]="forma"
+    *ngIf="disabledFlag"
+    (submit)="submit()">
+    <mat-form-field appearance="outline">
+      <mat-label>Input</mat-label>
+      <input matInput formControlName="userName">
+    </mat-form-field>
+    <mat-error *ngIf="forma.get('userName')?.errors?.['required']">Введи свое имя</mat-error>
+    <mat-form-field appearance="outline">
+      <mat-label>Textarea</mat-label>
+      <textarea matInput formControlName="commentText"></textarea>
+    </mat-form-field>
+    <mat-error *ngIf="forma.get('commentText')?.errors?.['required']">Введи текст комментария</mat-error>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+    >создать комментарий
+    </button>
+  </form>
+</section>
