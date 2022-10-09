@@ -1,4 +1,7 @@
 <p>JSON - комментарии </p>
 <router-outlet></router-outlet>
 <app-comment-form></app-comment-form>
-<app-comment></app-comment>
+<div *ngFor="let comment of mainComments">
+<app-comment [comment]="comment"  [mainComments]="mainComments" [childrenComments]="childrenComments" ></app-comment>
+
+</div>

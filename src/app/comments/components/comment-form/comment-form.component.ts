@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {IComment} from "../../settings/types/icomment";
+// import {IComment} from "../../settings/types/IMainComments";
 
 @Component({
   selector: 'app-comment-form',
@@ -23,7 +23,7 @@ export class CommentFormComponent implements OnInit {
 
   submit() {
     if (this.forma.valid){
-    const obj:IComment ={
+    const obj:any ={
       id: ( (Math.random() * 428).toFixed(3) ),
       userName: this.forma.value.userName,
       commentText: this.forma.value.commentText,
