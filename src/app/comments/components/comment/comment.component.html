@@ -2,18 +2,72 @@
   <div class="comment__main main">
     <p class="main__text">{{comment.commentText}}</p>
     <div class="main__btns btns">
-      <button mat-raised-button color="primary">редактировать</button>
-      <button mat-raised-button color="accent">комментировать</button>
-      <button mat-raised-button color="warn">удалить</button>
+      <button mat-raised-button color="primary" (click)="updateComment(comment.id)">редактировать</button>
+      <button mat-raised-button color="accent" (click)="comentig(comment.id)">комментировать</button>
+      <button mat-raised-button color="warn" (click)="deleteComment(comment.id)">удалить</button>
     </div>
+    <form
+      class="comment-form__form forma"
+      [formGroup]="forma"
+      *ngIf="disabledFlag"
+      (submit)="submit()">
+      <mat-form-field appearance="outline">
+        <mat-label>Textarea</mat-label>
+        <textarea matInput formControlName="commentText"></textarea>
+      </mat-form-field>
+      <mat-error *ngIf="forma.get('commentText')?.errors?.['required']">Введи текст комментария</mat-error>
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+      >создать комментарий
+      </button>
+    </form>
+    <form
+      class="comment-form__form forma"
+      [formGroup]="formaTwo"
+      *ngIf="disabledFlagTwo"
+      (submit)="childComment()">
+      <mat-form-field appearance="outline">
+        <mat-label>Input</mat-label>
+        <input matInput formControlName="userName">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Textarea</mat-label>
+        <textarea matInput formControlName="commentText"></textarea>
+      </mat-form-field>
+      <mat-error *ngIf="forma.get('commentText')?.errors?.['required']">Введи текст комментария</mat-error>
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+      >создать комментарий
+      </button>
+    </form>
   </div>
-<!--  <ul class="comment__child child" >-->
-<!--    <li class="child__item">-->
-<!--      <div class="child__btns btns">-->
-<!--        <button mat-raised-button color="primary">редактировать</button>-->
-<!--        <button mat-raised-button color="accent">добавить комментарий</button>-->
-<!--        <button mat-raised-button color="warn">удалить</button>-->
-<!--      </div>-->
-<!--    </li>-->
-<!--  </ul>-->
+  <ul class="comment__child child" *ngFor="let childrens of comment.child">
+    <li class="child__item">{{childrens.commentText}}
+      <div class="child__btns btns">
+        <button mat-raised-button color="primary" (click)="updateNewComment(childrens.id)">редактировать</button>
+        <button mat-raised-button color="warn">удалить</button>
+      </div>
+    </li>
+    <form
+      class="comment-form__form forma"
+      [formGroup]="formaThree"
+      *ngIf="disabledFlagThree"
+      (submit)="childCommentEdit()">
+      <mat-form-field appearance="outline">
+        <mat-label>Textarea</mat-label>
+        <textarea matInput formControlName="commentText"></textarea>
+      </mat-form-field>
+      <mat-error *ngIf="forma.get('commentText')?.errors?.['required']">Введи текст комментария</mat-error>
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+      >создать комментарий
+      </button>
+    </form>
+  </ul>
 </section>

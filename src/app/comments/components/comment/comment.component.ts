@@ -1,6 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {IMainComments} from "../../settings/types/IMainComments";
-import {IChildrenComments} from "../../settings/types/ichildren-comments";
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {CommentsServiceService} from "../../settings/services/comments-service.service";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-comment',
@@ -9,14 +9,92 @@ import {IChildrenComments} from "../../settings/types/ichildren-comments";
 })
 export class CommentComponent implements OnInit {
   @Input() comment!: any;
-  @Input() mainComments!: IMainComments[];
-  @Input() childrenComments!: IChildrenComments[];
+  @Input() child!: any;
+  @Output() emitCommentId!:EventEmitter<any>;
+  @Output() emitUpdateCommentId!:EventEmitter<any>;
+  @Output() emitCommentingNewComment!:EventEmitter<any>;
+  @Output() emitUpdateCommentCommentText!:EventEmitter<any>;
+  @Output() emitCommentingCommentId!:EventEmitter<any>;
+  public forma!: FormGroup;
+  public formaTwo!: FormGroup;
+  public disabledFlag: boolean;
+  public disabledFlagTwo: boolean;
+  public disabledFlagThree: boolean;
+  public commentId!:string;
+  public childCommentId!:string;
+  public formaThree!: FormGroup;
+  @Input() valueNewComment!:string;
 
-  constructor() {
+  constructor(private formBuild:FormBuilder, private commentServ:CommentsServiceService) {
+    this.emitCommentId = new EventEmitter<any>();
+    this.emitUpdateCommentId = new EventEmitter<any>();
+    this.emitUpdateCommentCommentText = new EventEmitter<any>();
+    this.emitCommentingCommentId = new EventEmitter<any>();
+    this.emitCommentingNewComment = new EventEmitter<any>();
+    this.disabledFlag = false;
+    this.disabledFlagTwo = false;
+    this.disabledFlagThree = false;
   }
 
   ngOnInit(): void {
-    // console.log(this.mainComments)
+    this.forma = this.formBuild.group({
+      commentText:[this.comment.commentText]
+    });
+    this.formaTwo = this.formBuild.group({
+      userName:[null, Validators.required],
+      commentText:[null, Validators.required],
+    });
+    this.formaThree = this.formBuild.group({
+      commentText:[this.valueNewComment],
+    });
+
   }
 
+
+  deleteComment(id:string) {
+    this.emitCommentId.emit(id);
+  }
+
+  updateComment(id: string) {
+    this.disabledFlag = true;
+    this.commentId = id;
+  }
+
+
+
+  submit() {
+    const obj = {commentText:this.forma.value.commentText}
+    this.emitUpdateCommentCommentText.emit(obj);
+    this.emitUpdateCommentId.emit(this.commentId);
+  }
+
+  comentig(id:string) {
+    this.emitCommentingCommentId.emit(id);
+    this.disabledFlagTwo = true
+    this.childCommentId = id;
+  }
+
+  childComment() {
+    const randomId = ( (Math.random() * 428).toFixed(3) );
+    const obj:any ={
+      id: randomId,
+      userName:this.formaTwo.value.userName,
+      commentText:this.formaTwo.value.commentText,
+      date: new Date().toISOString(),
+    }
+    this.child.push(obj);
+    this.formaTwo.reset();
+    this.disabledFlagTwo = false;
+    this.emitCommentingNewComment.emit(this.child);
+    this.emitCommentingCommentId.emit(this.childCommentId);
+  }
+
+  childCommentEdit() {
+    console.log(this.formaThree.value)
+  }
+
+  updateNewComment(id:any) {
+    this.disabledFlagThree = true;
+    console.log(id)
+  }
 }

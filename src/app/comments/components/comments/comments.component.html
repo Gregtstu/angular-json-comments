@@ -1,7 +1,17 @@
 <p>JSON - комментарии </p>
 <router-outlet></router-outlet>
-<app-comment-form></app-comment-form>
-<div *ngFor="let comment of mainComments">
-<app-comment [comment]="comment"  [mainComments]="mainComments" [childrenComments]="childrenComments" ></app-comment>
+<app-comment-form (emitComment)="addMainComment($event)"></app-comment-form>
+<div>
+  <app-comment *ngFor="let comment of mainComments"
+    [comment]="comment"
+    [child]="comment.child"
+    (emitCommentId)="deleteComment($event)"
+    (emitUpdateCommentId)="udateCommentText($event)"
+    (emitUpdateCommentCommentText)="udateCommentObj($event)"
+    (emitCommentingNewComment)="saveNewComment($event)"
+    (emitCommentingCommentId)="newCommentId($event)"
+  >
 
+  </app-comment>
 </div>
+

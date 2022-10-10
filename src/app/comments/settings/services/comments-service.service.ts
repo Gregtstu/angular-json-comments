@@ -13,4 +13,20 @@ export class CommentsServiceService {
   getComments(): Observable<any[]> {
     return this.http.get<any[]>('http://localhost:3000/comments');
   }
+
+  createComment(obj:any): Observable<any> {
+    return this.http.post<any>('http://localhost:3000/comments', obj);
+  }
+
+  deleteComment(id: string): Observable<any> {
+    return this.http.delete<any>(`http://localhost:3000/comments/${id}`);
+  }
+
+  updateComment(id: string, obj: any): Observable<any> {
+    return this.http.patch<any>(`http://localhost:3000/comments/${id}`, obj);
+  }
+
+  commentingComment(id: string, obj: any): Observable<any> {
+    return this.http.patch<any>(`http://localhost:3000/comments/${id}`, {child:obj});
+  }
 }
