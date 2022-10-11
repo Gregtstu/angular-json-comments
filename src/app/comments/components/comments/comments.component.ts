@@ -9,7 +9,9 @@ import {CommentsServiceService} from "../../settings/services/comments-service.s
 })
 export class CommentsComponent implements OnInit {
   public mainComments!: any[];
+  public childComments!: any[];
   public ommentObj!: any;
+  public childId!: any;
   public id!: string;
 
   constructor(private commentServ: CommentsServiceService) {
@@ -87,6 +89,26 @@ export class CommentsComponent implements OnInit {
          alert("Ошибка!");
         }
       })
+  }
+  getChildId(childId: any) {
+    this.childId = childId;
+  }
+
+  getNewChild(childId: any) {
+    const obj = {child:[]};
+    this.mainComments.map(item => {
+      item.child = item.child.filter((elem:any) => elem.id != childId);
+      obj.child = item.child;
+    });
+   this.commentServ.updateComment(this.childId, obj)
+     .subscribe({
+       next:(res)=> {
+         console.log(res);
+       },
+       error:(err)=> {
+         this.getComments();
+       }
+     })
   }
 
 }

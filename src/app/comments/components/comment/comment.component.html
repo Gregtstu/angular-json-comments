@@ -45,29 +45,30 @@
       </button>
     </form>
   </div>
+  <form
+    class="comment-form__form forma"
+    [formGroup]="formaThree"
+    *ngIf="disabledFlagThree"
+    (submit)="childCommentEdit()">
+    <mat-form-field appearance="outline">
+      <mat-label>Textarea</mat-label>
+      <textarea matInput formControlName="commentText"></textarea>
+    </mat-form-field>
+    <mat-error *ngIf="forma.get('commentText')?.errors?.['required']">Введи текст комментария</mat-error>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+    >создать комментарий
+    </button>
+  </form>
   <ul class="comment__child child" *ngFor="let childrens of comment.child">
+
     <li class="child__item">{{childrens.commentText}}
       <div class="child__btns btns">
         <button mat-raised-button color="primary" (click)="updateNewComment(childrens.id)">редактировать</button>
-        <button mat-raised-button color="warn">удалить</button>
+        <button mat-raised-button color="warn" (click)="deleteNewComment(comment.id, childrens.id)">удалить</button>
       </div>
     </li>
-    <form
-      class="comment-form__form forma"
-      [formGroup]="formaThree"
-      *ngIf="disabledFlagThree"
-      (submit)="childCommentEdit()">
-      <mat-form-field appearance="outline">
-        <mat-label>Textarea</mat-label>
-        <textarea matInput formControlName="commentText"></textarea>
-      </mat-form-field>
-      <mat-error *ngIf="forma.get('commentText')?.errors?.['required']">Введи текст комментария</mat-error>
-      <button
-        mat-raised-button
-        color="primary"
-        type="submit"
-      >создать комментарий
-      </button>
-    </form>
   </ul>
 </section>

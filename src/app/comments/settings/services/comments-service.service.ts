@@ -22,6 +22,7 @@ export class CommentsServiceService {
     return this.http.delete<any>(`http://localhost:3000/comments/${id}`);
   }
 
+
   updateComment(id: string, obj: any): Observable<any> {
     return this.http.patch<any>(`http://localhost:3000/comments/${id}`, obj);
   }
@@ -29,4 +30,7 @@ export class CommentsServiceService {
   commentingComment(id: string, obj: any): Observable<any> {
     return this.http.patch<any>(`http://localhost:3000/comments/${id}`, {child:obj});
   }
+
+
 }
+
