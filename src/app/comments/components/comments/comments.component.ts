@@ -103,10 +103,10 @@ export class CommentsComponent implements OnInit {
    this.commentServ.updateComment(this.childId, obj)
      .subscribe({
        next:(res)=> {
-         console.log(res);
+         this.getComments();
        },
        error:(err)=> {
-         this.getComments();
+         console.log(err);
        }
      })
   }

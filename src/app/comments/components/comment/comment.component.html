@@ -1,10 +1,24 @@
 <section class="comment">
   <div class="comment__main main">
-    <p class="main__text">{{comment.commentText}}</p>
-    <div class="main__btns btns">
-      <button mat-raised-button color="primary" (click)="updateComment(comment.id)">редактировать</button>
-      <button mat-raised-button color="accent" (click)="comentig(comment.id)">комментировать</button>
-      <button mat-raised-button color="warn" (click)="deleteComment(comment.id)">удалить</button>
+    <div class="wrapper">
+      <div class="main__name">
+        <div style="text-align: center" class="main__name-img">
+          <img  src="assets/user-icon.png">
+        </div>
+        <h3>{{comment.userName}}</h3>
+      </div>
+      <div class="main__btns btns">
+        <p class="main__text" style="margin-left: 50px">{{comment.commentText}}</p>
+        <button mat-icon-button color="primary" (click)="updateComment(comment.id)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="accent" (click)="comentig(comment.id)">
+          <mat-icon>assignment</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="deleteComment(comment.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
     </div>
     <form
       class="comment-form__form forma"
@@ -12,15 +26,14 @@
       *ngIf="disabledFlag"
       (submit)="submit()">
       <mat-form-field appearance="outline">
-        <mat-label>Textarea</mat-label>
+        <mat-label>Редактирование</mat-label>
         <textarea matInput formControlName="commentText"></textarea>
       </mat-form-field>
-      <mat-error *ngIf="forma.get('commentText')?.errors?.['required']">Введи текст комментария</mat-error>
       <button
         mat-raised-button
         color="primary"
         type="submit"
-      >создать комментарий
+      >редактировать комментарий
       </button>
     </form>
     <form
@@ -29,12 +42,12 @@
       *ngIf="disabledFlagTwo"
       (submit)="childComment()">
       <mat-form-field appearance="outline">
-        <mat-label>Input</mat-label>
-        <input matInput formControlName="userName">
+        <mat-label>Введи свое имя</mat-label>
+        <input matInput formControlName="userName" placeholder="Введи свое имя">
       </mat-form-field>
       <mat-form-field appearance="outline">
-        <mat-label>Textarea</mat-label>
-        <textarea matInput formControlName="commentText"></textarea>
+        <mat-label>Введи текст комментария</mat-label>
+        <textarea matInput formControlName="commentText" placeholder="Введи текст комментария"></textarea>
       </mat-form-field>
       <mat-error *ngIf="forma.get('commentText')?.errors?.['required']">Введи текст комментария</mat-error>
       <button
@@ -64,11 +77,21 @@
   </form>
   <ul class="comment__child child" *ngFor="let childrens of comment.child">
 
-    <li class="child__item">{{childrens.commentText}}
-      <div class="child__btns btns">
-        <button mat-raised-button color="primary" (click)="updateNewComment(childrens.id)">редактировать</button>
-        <button mat-raised-button color="warn" (click)="deleteNewComment(comment.id, childrens.id)">удалить</button>
+    <li class="child__item">
+      <div class="child__item-name">
+        <div class="child__item-img" style="text-align: center">
+          <img src="assets/user-icon.png">
+        </div>
+        <h3>{{childrens.userName}}</h3>
       </div>
+      <div class="wrapper-comment">
+        <p>{{childrens.commentText}}</p>
+        <button mat-icon-button color="warn" (click)="deleteNewComment(comment.id, childrens.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+
+
     </li>
   </ul>
 </section>

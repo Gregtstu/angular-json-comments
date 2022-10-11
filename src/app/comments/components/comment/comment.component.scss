@@ -1,15 +1,41 @@
-.main{
+.main {
   margin-top: 50px;
+  padding-left: 30px;
   color: tomato;
   font-size: 40px;
   box-sizing: border-box;
   //overflow: auto;
+  .wrapper{
+    display: flex;
+  }
+  .btns{
+    margin-left: 20px;
+    text-align: start;
+  }
+
+  .forma{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: 0 auto;
+    font-size: 20px;
+  }
 }
-.child{
-  margin-top: 10px;
+
+.child {
+  //margin-top: 10px;
+  margin-left: 70px;
   list-style: none;
   color: blue;
-  font-size: 40px;
+  font-size: 30px;
   line-height: normal;
   box-sizing: border-box;
+
+  .child__item {
+    display: flex;
+
+    .wrapper-comment {
+      display: flex;
+    }
+  }
 }
